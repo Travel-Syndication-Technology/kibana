@@ -46,7 +46,7 @@ RUN echo 'deb https://artifacts.elastic.co/packages/5.x-prerelease/apt stable ma
 
 RUN set -x \
 	&& apt-get update \
-	&& apt-get install -y --no-install-recommends kibana=$KIBANA_VERSION \
+	&& apt-get install -y --no-install-recommends kibana=$KIBANA_VERSION wget zip unzip \
 	&& rm -rf /var/lib/apt/lists/* \
 	\
 # ensure the default configuration is useful when using --link
@@ -54,6 +54,10 @@ RUN set -x \
 	&& grep -q 'elasticsearch:9200' /etc/kibana/kibana.yml
 
 ENV PATH /usr/share/kibana/bin:$PATH
+
+RUN wget https://artifacts.elastic.co/downloads/packs/x-pack/x-pack-5.0.0-rc1.zip -O /root/xpack-5.0.0-rc1.zip
+
+RUN /usr/share/kibana/bin/kibana-plugin install file:///root/xpack-5.0.0-rc1.zip
 
 COPY docker-entrypoint.sh /
 
