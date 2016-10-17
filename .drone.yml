@@ -1,6 +1,6 @@
 publish:
   docker:
-    context: ./5.0/.
+    file: ./5.0/Dockerfile
     repo: kibana5
     tag:
       - $${BRANCH/master/latest}
