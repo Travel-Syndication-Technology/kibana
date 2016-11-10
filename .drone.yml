@@ -1,13 +1,10 @@
-publish:
+pipeline:
   docker:
+    image: plugins/docker
     file: ./5.0/Dockerfile
-    repo: kibana5
+    repo: docker.infra.tstllc.net/kibana5
     tag:
-      - $${BRANCH/master/latest}
-      - $$BRANCH.build-$$BUILD_NUMBER
+      - ${DRONE_BRANCH/master/latest}
+      - ${DRONE_BRANCH}.build-${DRONE_BUILD_NUMBER}
     force_tag: true
-    registry: docker.infra.tstllc.net
-    username: drone
-    password: $$REGISTRY_PASS
-    email: drone@tstllc.net
     storage_driver: overlay
